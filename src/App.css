@@ -1,0 +1,21 @@
+.App {
+    display: flex;
+    flex-direction: row;
+}
+
+
+.lottie {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.animation {
+    width: 100vw;
+    height: 37rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
