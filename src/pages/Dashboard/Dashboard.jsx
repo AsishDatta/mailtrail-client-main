@@ -12,18 +12,24 @@ export default function Dashboard() {
     const [data, setData] = useState([]);
     const [selected, setSelected] = useState(null);
     const [showLoading, setShowLoading] = useState(true);
+    const [loadError, setLoadError] = useState('');
 
     useEffect(() => {
         let ignore = false;
         axios.get(`${API_URL}/getTokens`)
             .then(res => {
                 if (!ignore) {
-                    setData(Object.values(res.data).reverse());
+                    const tokens = Array.isArray(res.data) ? res.data : Object.values(res.data);
+                    setData(tokens.reverse());
                     setShowLoading(false);
                 }
             })
             .catch(err => {
                 console.log(err);
+                if (!ignore) {
+                    setLoadError('Could not load tracked emails.');
+                    setShowLoading(false);
+                }
             });
 
         return () => {
@@ -43,7 +49,9 @@ export default function Dashboard() {
         <div className='main'>
             {
                 showLoading ? (<div className='lottie'><Lottie className='animation' play animationData={loadingAnimation} /></div>) :
-                    data.length === 0 ? (
+                    loadError ? (
+                        <p>{loadError}</p>
+                    ) : data.length === 0 ? (
                         <p>There is nothing to show here yet</p>
                     ) : selected !== null ? (
                         <TrackingDetails data={data[selected]} onClose={handleTrackingDetailsClose} />
