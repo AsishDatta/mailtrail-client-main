@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import "./styles.css";
 import axios from 'axios';
+import { API_URL } from '../../api';
 import Lottie from 'react-lottie-player';
 import loadingAnimation from '../../assets/loading.json';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
@@ -11,7 +12,7 @@ function TrackingDetails({ data, onClose }) {
     const [showLoading, setShowLoading] = useState(true);
 
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_API_URL}/getDetails?token=${data._id}`)
+        axios.get(`${API_URL}/getDetails?token=${data._id}`)
             .then(res => {
                 setDetails(res.data);
                 setAccessDetails(res.data.accessDetails);

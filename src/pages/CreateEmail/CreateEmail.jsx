@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import './styles.css';
 import axios from 'axios';
+import { API_URL } from '../../api';
 import BuildIcon from '@mui/icons-material/Build';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import Lottie from 'react-lottie-player';
@@ -22,7 +23,7 @@ export default function CreateEmail() {
     const generateHTML = async () => {
         // Show the loading animation
         setShowLoading(true);
-        await axios.post(`${process.env.REACT_APP_API_URL}/newToken`, {
+        await axios.post(`${API_URL}/newToken`, {
             emailTitle,
             emailBody
         })
@@ -35,7 +36,7 @@ export default function CreateEmail() {
             });
 
         // Generate the HTML code with the tracking pixel
-        const trackingPixelUrl = `${process.env.REACT_APP_API_URL}?token=${token}`;
+        const trackingPixelUrl = `${API_URL}?token=${token}`;
         // const htmlWithPixel = `<p>${emailBody}</p><img src="${trackingPixelUrl}" alt="tracking-pixel">`;
         const htmlWithPixel = `<p>${emailBody.replace(/\n{2,}/g, '</p><p>').replace(/\n/g, '<br>')}<img src="${trackingPixelUrl}" alt="tp"></p>`;
         // Update the rendered HTML state

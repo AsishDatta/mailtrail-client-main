@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import './styles.css';
 import React from 'react';
 import axios from 'axios';
+import { API_URL } from '../../api';
 import TrackingList from '../../components/TrackingList/TrackingList';
 import TrackingDetails from '../../components/TrackingDetails/TrackingDetails';
 import Lottie from 'react-lottie-player';
@@ -14,7 +15,7 @@ export default function Dashboard() {
 
     useEffect(() => {
         let ignore = false;
-        axios.get(`${process.env.REACT_APP_API_URL}/getTokens`)
+        axios.get(`${API_URL}/getTokens`)
             .then(res => {
                 if (!ignore) {
                     setData(Object.values(res.data).reverse());
